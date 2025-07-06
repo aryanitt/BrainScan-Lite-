@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BrainScan Lite - MBTI Predictor</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .form-container {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+      max-width: 960px;
+      width: 100%;
+      margin: 20px;
+    }
+
+    .form-title {
+      text-align: center;
+      font-size: 32px;
+      font-weight: bold;
+      color: #0f2027;
+      margin-bottom: 25px;
+    }
+
+    label {
+      font-weight: 600;
+      font-size: 15px;
+      color: #333;
+    }
+
+    select.form-select {
+      font-size: 15px;
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    .btn-primary {
+      background-color: #0f2027;
+      border: none;
+      padding: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 10px;
+      transition: background-color 0.3s;
+    }
+
+    .btn-primary:hover {
+      background-color: #163b50;
+    }
+
+    .result-box {
+      background-color: #ecf9f6;
+      border: 1px solid #a8dfcf;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 25px;
+      text-align: center;
+      color: #145f4c;
+      font-size: 20px;
+    }
+
+    @media (max-width: 576px) {
+      .form-title {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <div class="form-title">🌟 BrainScan Lite – MBTI Personality Predictor</div>
+
+    <form method="POST" action="/predictdata">
+      <div class="row g-3">
+        {% for i in range(1, 11) %}
+        <div class="col-md-6">
+          <label class="form-label">
+            {% if i == 1 %}I prefer deep conversations over small talk.
+            {% elif i == 2 %}I enjoy organizing my plans and sticking to them.
+            {% elif i == 3 %}I trust my feelings more than logic when making decisions.
+            {% elif i == 4 %}I recharge best when I'm alone.
+            {% elif i == 5 %}I focus more on current facts than future possibilities.
+            {% elif i == 6 %}I prefer flexibility over routine.
+            {% elif i == 7 %}I enjoy thinking about abstract concepts.
+            {% elif i == 8 %}I get excited by meeting new people.
+            {% elif i == 9 %}I make decisions based on logic and fairness.
+            {% elif i == 10 %}I like to be spontaneous and adapt as I go.
+            {% endif %}
+          </label>
+          <select name="Q{{ i }}" class="form-select" required>
+            <option value="">Choose...</option>
+            <option value="1">1 - Strongly Disagree</option>
+            <option value="2">2 - Disagree</option>
+            <option value="3">3 - Neutral</option>
+            <option value="4">4 - Agree</option>
+            <option value="5">5 - Strongly Agree</option>
+          </select>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="d-grid mt-4">
+        <button type="submit" class="btn btn-primary btn-lg">🔍 Predict My MBTI Type</button>
+      </div>
+    </form>
+
+    {% if results %}
+    <div class="result-box">
+      🎯 <strong>Predicted MBTI Type:</strong> {{ results }}
+    </div>
+    {% endif %}
+  </div>
+
+</body>
+</html>
